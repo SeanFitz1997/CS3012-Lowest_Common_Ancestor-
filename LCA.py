@@ -6,4 +6,6 @@ class Node:
         self.left = None
         self.right = None
 #Functions================================================
+def findLCA(root, x, y):
+    return None
 #Program==================================================
