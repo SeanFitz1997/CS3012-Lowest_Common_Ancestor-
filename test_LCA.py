@@ -32,5 +32,35 @@ class test_LCA(unittest.TestCase):
         #Test 7: LCA 2-4
         self.assertEqual(LCA.findLCA(root, 2, 4), 2)
 
+    def test_pathTo(self):
+        #Test 1: test all values equal None
+        self.assertEqual(LCA.pathTo(None, None), None)
+
+        #Test 2: test path to root
+        root = LCA.Node(1)
+        self.assertEqual(LCA.pathTo(root, 1), [1])
+
+        #Test 3: test for key not in tree
+        self.assertEqual(LCA.pathTo(root, 50), None)
+
+        #Test 4: path to 4
+        root.left = LCA.Node(2) 
+        root.right = LCA.Node(3) 
+        root.left.left = LCA.Node(4) 
+        root.left.right = LCA.Node(5) 
+        root.right.left = LCA.Node(6) 
+        root.right.right = LCA.Node(7)
+        self.assertEqual(LCA.pathTo(root, 4), [1, 2, 4])
+
+        #Test 5: path to 6
+        self.assertEqual(LCA.pathTo(root, 6), [1, 3, 6])
+
+        #Test 6: path to 3
+        self.assertEqual(LCA.pathTo(root, 3), [1, 3])
+
+        #Test 7: path to 2
+        self.assertEqual(LCA.pathTo(root, 2), [1, 2])
+
+
 if(__name__ == '__main__'):
     unittest.main()
