@@ -11,7 +11,7 @@ def findLCA(root, x, y):
         return None
     return None
 
-def pathTo(root, key):
+def pathTo(root, path, key):
     return None
 
 #Program==================================================
