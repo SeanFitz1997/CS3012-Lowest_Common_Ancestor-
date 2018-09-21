@@ -54,7 +54,7 @@ class test_LCA(unittest.TestCase):
 
         #Test 5: path to 6
         self.assertEqual(LCA.pathTo(root, [], 6), True)
-
+        
         #Test 6: path to 3
         self.assertEqual(LCA.pathTo(root, [], 3), True)
 
