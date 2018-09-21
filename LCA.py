@@ -7,5 +7,7 @@ class Node:
         self.right = None
 #Functions================================================
 def findLCA(root, x, y):
+    if(root == None or x == None or y == None):
+        return None
     return None
 #Program==================================================
