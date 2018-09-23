@@ -14,12 +14,11 @@ def findLCA(root, x, y):
     pathTo(root, px, x)
     py = []
     pathTo(root, py, y)
-    
+
     lca = None 
     for x_key, y_key, in zip(px, py):
         if(x_key == y_key):
             lca = x_key
-            break
     
     return lca
 
