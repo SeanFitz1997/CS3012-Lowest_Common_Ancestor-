@@ -9,10 +9,22 @@ class Node:
 def findLCA(root, x, y):
     if(root is None or x is None or y is None):
         return None
-    return None
+
+    px = []
+    pathTo(root, px, x)
+    py = []
+    pathTo(root, py, y)
+    
+    lca = None 
+    for x_key, y_key, in zip(px, py):
+        if(x_key == y_key):
+            lca = x_key
+            break
+    
+    return lca
 
 def pathTo(root, path, key):
-    if(root is None): 
+    if(root == None): 
         return False
   
     # Store this node is path vector. The node will be 
