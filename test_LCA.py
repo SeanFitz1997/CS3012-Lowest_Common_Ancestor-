@@ -32,6 +32,9 @@ class test_LCA(unittest.TestCase):
         #Test 7: LCA 2-4
         self.assertEqual(LCA.findLCA(root, 2, 4), 2)
 
+        #Test 8: nodes at different heights
+        self.assertAlmostEqual(LCA.findLCA(root, 2, 6), 1)
+
     def test_pathTo(self):
         #Test 1: test all values equal None
         self.assertEqual(LCA.pathTo(None, None, None), False)
