@@ -6,7 +6,6 @@ class Node:
         self.children = []
 #Functions================================================
 def findLCA(root, x, y):
-    '''
     if(root is None or x is None or y is None):
         return None
 
@@ -19,9 +18,8 @@ def findLCA(root, x, y):
     for x_key, y_key, in zip(px, py):
         if(x_key == y_key):
             lca = x_key
-    
-    return lca'''
-    return None
+            
+    return lca
 
 def pathTo(root, path, key):
     if(root == None): 
