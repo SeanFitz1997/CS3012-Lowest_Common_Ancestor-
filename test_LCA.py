@@ -42,7 +42,7 @@ class test_LCA(unittest.TestCase):
         root.children.append(LCA.Node(5))
         root.children.append(LCA.Node(3))
         root.children[0].children.append(LCA.Node(4))
-        root.children[2].children.append(LCA.Node(5))
+        root.children[1].children.append(LCA.Node(5))
         root.children[2].children.append(LCA.Node(6))
         root.children[2].children.append(LCA.Node(7))
 
@@ -90,6 +90,32 @@ class test_LCA(unittest.TestCase):
         #Test 7: path to 2
         self.assertEqual(LCA.pathTo(root, [], 2), True)
 
+    def test_pathsTo(self):
+        #Test 1: test all values equal None
+        self.assertEqual(LCA.findPathsTo(None, None), [])
+
+        #Test 2: test path to root
+        root = LCA.Node(1)
+        self.assertEqual(LCA.findPathsTo(root, 1), [[1]])
+
+        #Test 3: test for key not in tree
+        self.assertEqual(LCA.findPathsTo(root, 50), [])
+
+        #Test 4: paths to 4
+        root.children.append(LCA.Node(2))
+        root.children.append(LCA.Node(5))
+        root.children.append(LCA.Node(3))
+        root.children[0].children.append(LCA.Node(4))
+        root.children[2].children.append(LCA.Node(5))
+        root.children[2].children.append(LCA.Node(6))
+        root.children[2].children.append(LCA.Node(7))
+        self.assertEqual(LCA.findPathsTo(root, 4), [[1,2,4]])
+
+        #Test 5: path to 6
+        self.assertEqual(LCA.findPathsTo(root, 6), [[1,3,6]])
+        
+        #Test 6: path to 5
+        self.assertEqual(LCA.findPathsTo(root, 5), [[1,5],[1,3,5]])
 
 if(__name__ == '__main__'):
     unittest.main()
