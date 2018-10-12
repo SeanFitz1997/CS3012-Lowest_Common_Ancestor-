@@ -3,10 +3,10 @@
 class Node:
     def __init__(self, key):
         self.key = key
-        self.left = None
-        self.right = None
+        self.children = []
 #Functions================================================
 def findLCA(root, x, y):
+    '''
     if(root is None or x is None or y is None):
         return None
 
@@ -20,9 +20,11 @@ def findLCA(root, x, y):
         if(x_key == y_key):
             lca = x_key
     
-    return lca
+    return lca'''
+    return None
 
 def pathTo(root, path, key):
+    '''
     if(root == None): 
         return False
   
@@ -36,7 +38,9 @@ def pathTo(root, path, key):
             (root.right!= None and pathTo(root.right, path, key)))): 
         return True 
     # removed if not in path from root to k 
-    path.pop() 
+    path.pop()
+    ''' 
     return False
+
 
 #Program==================================================
