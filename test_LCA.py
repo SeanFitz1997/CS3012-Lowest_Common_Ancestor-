@@ -4,37 +4,37 @@ import LCA
 class test_LCA(unittest.TestCase):
 
     def test_findLCA(self):
-            #Test 1: test all values equal None
-            self.assertEqual(LCA.findLCA(None, None, None), None)
+        #Test 1: test all values equal None
+        self.assertEqual(LCA.findLCA(None, None, None), None)
 
-            #Test 2: test when both node are root
-            root = LCA.Node(1)
-            self.assertEqual(LCA.findLCA(root, 1, 1), 1)
+        #Test 2: test when both node are root
+        root = LCA.Node(1)
+        self.assertEqual(LCA.findLCA(root, 1, 1), 1)
 
-            #Test 3: test when a value is not in tree
-            self.assertEqual(LCA.findLCA(root, 50, 51), None)
+        #Test 3: test when a value is not in tree
+        self.assertEqual(LCA.findLCA(root, 50, 51), None)
 
-            #Test 4: LCA 4-5
-            root.children.append(LCA.Node(2)) 
-            root.children.append(LCA.Node(3))
-            root.children[0].children.append(LCA.Node(4))
-            root.children[0].children.append(LCA.Node(5))
-            root.children[1].children.append(LCA.Node(6))
-            root.children[1].children.append(LCA.Node(7))  
-        
-            self.assertEqual(LCA.findLCA(root, 4, 5), 2)
+        #Test 4: LCA 4-5
+        root.children.append(LCA.Node(2)) 
+        root.children.append(LCA.Node(3))
+        root.children[0].children.append(LCA.Node(4))
+        root.children[0].children.append(LCA.Node(5))
+        root.children[1].children.append(LCA.Node(6))
+        root.children[1].children.append(LCA.Node(7))  
+    
+        self.assertEqual(LCA.findLCA(root, 4, 5), 2)
 
-            #Test 5: LCA 4-6
-            self.assertEqual(LCA.findLCA(root, 4, 6), 1)
+        #Test 5: LCA 4-6
+        self.assertEqual(LCA.findLCA(root, 4, 6), 1)
 
-            #Test 6: LCA 3-4
-            self.assertEqual(LCA.findLCA(root, 3, 4), 1)
+        #Test 6: LCA 3-4
+        self.assertEqual(LCA.findLCA(root, 3, 4), 1)
 
-            #Test 7: LCA 2-4
-            self.assertEqual(LCA.findLCA(root, 2, 4), 2)
+        #Test 7: LCA 2-4
+        self.assertEqual(LCA.findLCA(root, 2, 4), 2)
 
-            #Test 8: nodes at different heights
-            self.assertAlmostEqual(LCA.findLCA(root, 2, 6), 1)
+        #Test 8: nodes at different heights
+        self.assertAlmostEqual(LCA.findLCA(root, 2, 6), 1)
 
     def test_pathTo(self):
         #Test 1: test all values equal None
@@ -48,12 +48,12 @@ class test_LCA(unittest.TestCase):
         self.assertEqual(LCA.pathTo(root, [], 50), False)
 
         #Test 4: path to 4
-        root.left = LCA.Node(2) 
-        root.right = LCA.Node(3) 
-        root.left.left = LCA.Node(4) 
-        root.left.right = LCA.Node(5) 
-        root.right.left = LCA.Node(6) 
-        root.right.right = LCA.Node(7)
+        root.children.append(LCA.Node(2)) 
+        root.children.append(LCA.Node(3))
+        root.children[0].children.append(LCA.Node(4))
+        root.children[0].children.append(LCA.Node(5))
+        root.children[1].children.append(LCA.Node(6))
+        root.children[1].children.append(LCA.Node(7))
         self.assertEqual(LCA.pathTo(root, [], 4), True)
 
         #Test 5: path to 6

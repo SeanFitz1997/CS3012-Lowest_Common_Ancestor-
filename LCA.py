@@ -24,23 +24,20 @@ def findLCA(root, x, y):
     return None
 
 def pathTo(root, path, key):
-    '''
     if(root == None): 
         return False
   
     # Store this node is path vector. The node will be 
     path.append(root.key) 
-
     if(root.key == key): 
         return True
 
-    if(((root.left != None and pathTo(root.left, path, key)) or
-            (root.right!= None and pathTo(root.right, path, key)))): 
-        return True 
+    for node in root.children:
+        if node != None and pathTo(node, path, key):
+            return True
+        
     # removed if not in path from root to k 
     path.pop()
-    ''' 
     return False
-
 
 #Program==================================================
