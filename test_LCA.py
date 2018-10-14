@@ -42,7 +42,7 @@ class test_LCA(unittest.TestCase):
         root.children.append(LCA.Node(5))
         root.children.append(LCA.Node(3))
         root.children[0].children.append(LCA.Node(4))
-        root.children[1].children.append(LCA.Node(5))
+        root.children[2].children.append(LCA.Node(5))
         root.children[2].children.append(LCA.Node(6))
         root.children[2].children.append(LCA.Node(7))
 

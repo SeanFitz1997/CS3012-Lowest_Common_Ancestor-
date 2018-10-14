@@ -12,17 +12,17 @@ def findLCA(root, x, y):
     if(root is None or x is None or y is None):
         return None
 
-    px = []
-    pathTo(root, px, x)
-    py = []
-    pathTo(root, py, y)
+    px = findPathsTo(root, x)
+    pxFlat = list(set([item for sublist in px for item in sublist]))
+    py = findPathsTo(root, y)
+    lca = (None, -1)
 
-    lca = None 
-    for x_key, y_key, in zip(px, py):
-        if(x_key == y_key):
-            lca = x_key
+    for keyX in pxFlat:
+        for l in py:
+            if (keyX in l) and l.index(keyX) > lca[1]:
+                lca = (keyX, l.index(keyX))
 
-    return lca
+    return lca[0]
 
 def findPathsTo(root, key):
     if(root == None or key == None):
@@ -63,13 +63,3 @@ def pathTo(root, path, key):
     return False
 
 #Program==================================================
-root = Node(1)
-root.children.append(Node(2))
-root.children.append(Node(5))
-root.children.append(Node(3))
-root.children[0].children.append(Node(4))
-root.children[2].children.append(Node(5))
-root.children[2].children.append(Node(6))
-root.children[2].children.append(Node(7))
-
-print(findPathsTo(root, 4))
