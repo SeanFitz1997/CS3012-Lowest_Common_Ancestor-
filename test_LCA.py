@@ -58,8 +58,28 @@ class test_LCA(unittest.TestCase):
         #Test 4: LCA 1-7
         self.assertEqual(LCA.findLCA(root, 1, 7), 1)
 
+        #New Graph
+        root = LCA.Node('G')
+        root.children.append(LCA.Node('D'))
+        root.children.append(LCA.Node('F'))
+        root.children[0].children.append(LCA.Node('C'))
+        root.children[0].children[0].children.append(LCA.Node('B'))
+        root.children[0].children[0].children[0].children.append(LCA.Node('A'))
+        root.children[1].children.append(LCA.Node('F'))
+        root.children[1].children[0].children.append(LCA.Node('E'))
+        root.children[1].children[0].children[0].children.append(LCA.Node('B'))
 
+        #Test 5: LCA G-G
+        self.assertEqual(LCA.findLCA(root, 'G', 'G'), 'G')
 
+        #Test 6: LCA G-C
+        self.assertEqual(LCA.findLCA(root, 'G', 'C'), 'G')
+
+        #Test 7: LCA G-C
+        self.assertEqual(LCA.findLCA(root, 'C', 'E'), 'G')
+
+        #Test 8: LCA G-C
+        self.assertEqual(LCA.findLCA(root, 'A', 'B'), 'B')
 
     def test_pathTo(self):
         #Test 1: test all values equal None
