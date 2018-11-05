@@ -1,6 +1,14 @@
 #Imports==================================================
 from github import Github
 #Functions================================================
+''' 
+Returns user projects as a string. Displays:
+- Username and Name
+- Projects & Toppics
+'''
+def getProjects(user):
+    return ''
+
 #Program==================================================
 
 #Create github account using access token
