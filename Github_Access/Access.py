@@ -5,17 +5,34 @@ from github import Github
 Returns user projects as a string. Displays:
 - Username and Name
 - Projects & Toppics
+-
 '''
 def getProjects(user):
 
     if user is None:
         return 'No User Provided'
-    return ''
+
+    output = 'UserName: %s, Name: %s\n' % (g.get_user().login, g.get_user().name)
+    
+    output += 'Repositories:\n'
+    for repo in g.get_user().get_repos():
+        output +=   '''
+        Name: %s,
+            Toppics: %s,
+            Branches: %s,
+            Number of Commits: %d,
+            Number of Contribuators %d,
+            Number of Stars %d
+                    ''' % (
+                        repo.name, list(repo.get_branches()),repo.get_topics(), 
+                        len(list(repo.get_commits())), len(list(repo.get_collaborators())), 
+                        repo.stargazers_count)
+        #print('Repo: %s, Toppics: %s' % (repo.name, repo.get_topics()))
+
+    return output
 
 #Program==================================================
 if __name__ == '__main__':
-    #Create github account using access token
-    g = Github("a28d927e2e3ed1098f299df8c11868c7ffc290ce")
-
-    for repo in g.get_user().get_repos():
-        print('Repo: %s, Toppics: %s' % (repo.name, repo.get_topics()))
+    #Create github account using personal access token
+    g = Github('') # <- Put access code here
+    print(getProjects(g))
