@@ -18,7 +18,7 @@ def getProjects(user):
     for repo in g.get_user().get_repos():
         output +=   '''
         Name: %s,
-            Toppics: %s,
+            Topics: %s,
             Branches: %s,
             Number of Commits: %d,
             Number of Contribuators %d,
