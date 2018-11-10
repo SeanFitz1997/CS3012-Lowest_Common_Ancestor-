@@ -3,9 +3,6 @@ from github import Github
 #Functions================================================
 ''' 
 Returns user projects as a string. Displays:
-- Username and Name
-- Projects & Toppics
--
 '''
 def getProjects(user):
 
@@ -34,5 +31,7 @@ def getProjects(user):
 #Program==================================================
 if __name__ == '__main__':
     #Create github account using personal access token
-    g = Github('') # <- Put access code here
+    login = input('Enter: <userName> <passWord>\t')
+    uName, passW = login.split(' ')
+    g = Github(uName, passW)
     print(getProjects(g))
