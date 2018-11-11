@@ -1,4 +1,9 @@
 {% extends "User/header.html" %}
 {% block content %}
     <p>Hello World</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit">
+    </form>
 {% endblock %}
