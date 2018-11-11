@@ -6,26 +6,26 @@ from github import Github
 def getRepoDetails(user):
 
     if user is None:
-        return 'No User Provided'
+        return None
 
-    output = 'UserName: %s, Name: %s\n' % (g.get_user().login, g.get_user().name)
-    
-    output += 'Repositories:\n'
-    for repo in g.get_user().get_repos():
-        output +=   '''
-        Name: %s,
-            Topics: %s,
-            Branches: %s,
-            Number of Commits: %d,
-            Number of Contribuators %d,
-            Number of Stars %d
-                    ''' % (
-                        repo.name, repo.get_topics(), list(repo.get_branches()),
-                        len(list(repo.get_commits())), len(list(repo.get_collaborators())), 
-                        repo.stargazers_count)
-        #print('Repo: %s, Toppics: %s' % (repo.name, repo.get_topics()))
+    userDetails = {
+        'UserName' : user.get_user().login,
+        'Name' : user.get_user().name,
+        'Repos' : []
+    }
 
-    return output
+    for repo in user.get_user().get_repos():
+        repoDetails = {
+            'Name' : repo.name,
+            'Toppics' : repo.get_topics(),
+            'Branchs' : list(repo.get_branches()),
+            'Commits' : list(repo.get_commits()),
+            'Collaburators' : list(repo.get_collaborators()),
+            'Stars' : repo.stargazers_count
+        }
+        userDetails['Repos'].append(repoDetails)
+
+    return userDetails
 
 ''' Gets the language breakdown of all repos
     and each individual repo '''
@@ -76,10 +76,10 @@ def getLangSkills(user):
         '.CSS' : 'CSS',
         '.PHP' : 'PHP'
     }
-    user = {   'Name' : 'User',
-                'Total' : 0    }
+    userDetails = { 'Name' : 'User',
+                    'Total' : 0    }
     userInfo = []
-    repos = g.get_user().get_repos()
+    repos = user.get_user().get_repos()
     for repo in repos:
         repoDetails = { 'Name' : repo.name,
                         'Total' : 0         }
@@ -96,11 +96,11 @@ def getLangSkills(user):
                 if extention and extention.group(1).upper() in proLang:
                     lang = proLang[extention.group(1).upper()]
                     #Add to user totals
-                    user['Total'] += file_content.size
+                    userDetails['Total'] += file_content.size
                     if lang in user:
-                        user[lang] += file_content.size
+                        userDetails[lang] += file_content.size
                     else:
-                        user[lang] = file_content.size
+                        userDetails[lang] = file_content.size
                     #Add to repo totals
                     repoDetails['Total'] += file_content.size
                     if lang in repoDetails:
@@ -121,5 +121,5 @@ if __name__ == '__main__':
     login = input('Enter: <userName> <password>\t')
     uName, passW = login.split(' ')
     g = Github(uName, passW)
-    #print(getRepoDetails(g))
-    print(getLangSkills(g))
+    print(getRepoDetails(g))
+    #print(getLangSkills(g))
