@@ -97,7 +97,7 @@ def getLangSkills(user):
                     lang = proLang[extention.group(1).upper()]
                     #Add to user totals
                     userDetails['Total'] += file_content.size
-                    if lang in user:
+                    if lang in userDetails:
                         userDetails[lang] += file_content.size
                     else:
                         userDetails[lang] = file_content.size
@@ -112,7 +112,7 @@ def getLangSkills(user):
         userInfo.append(repoDetails)
 
     #Add user to start of userInfo
-    userInfo = [user] + userInfo
+    userInfo = [userDetails] + userInfo
     return userInfo
 
 #Program==================================================

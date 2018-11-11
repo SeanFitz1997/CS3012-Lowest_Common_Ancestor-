@@ -20,8 +20,16 @@ class test_LCA(unittest.TestCase):
         self.assertEqual(repoDetails['Repos'][2]['Name'], 'CS3012_SoftwareEngineering')
         self.assertEqual(repoDetails['Repos'][2]['Toppics'], ['python', 'algorithm', 'lowest-common-ancestor'])
         self.assertEqual(repoDetails['Repos'][2]['Stars'], 0)
-        
-        
+    
+    def test_getLangSkills(self):
+        #Test 1: Test fuction with None value
+        self.assertEqual(Access.getLangSkills(None), None)
+
+        #Test 2: Test with valid user
+        langDetails = Access.getLangSkills(self.testUser)
+        self.assertEqual('Python' in langDetails[0].keys(), True)
+        self.assertEqual('Java' in langDetails[0].keys(), True)
+        self.assertEqual('HTML' in langDetails[0].keys(), True)
 
 if(__name__ == '__main__'):
     unittest.main()
