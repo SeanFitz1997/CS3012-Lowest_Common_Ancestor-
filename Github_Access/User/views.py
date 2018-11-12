@@ -20,7 +20,10 @@ class userView(TemplateView):
         if form.is_valid:
             try:
                 g = Github(form.data['userName'], form.data['password'])
-                print(g.get_user().name)
+                context = {
+                    'user_login' : g.get_user()
+                }
+                return render(request, self.template_name, context)
             except:
                 messages.add_message(request, messages.ERROR, 'Invalid Github details.')
             

@@ -1,9 +1,16 @@
 {% extends "User/header.html" %}
 {% block content %}
-    <p>Hello World</p>
-    <form method="post">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Submit">
-    </form>
+    {% if not user_login %}
+        <p>[TODO add details & instructions]</p>
+        <form method="post">
+            <legend>Log In!</legend>
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
+
+    {% else %}
+        <h3><b>Username: </b>{{ user_login.login }}</h3>
+        <h3><b>Name: </b>{{ user_login.name }}</h3>
+    {% endif %}
 {% endblock %}
