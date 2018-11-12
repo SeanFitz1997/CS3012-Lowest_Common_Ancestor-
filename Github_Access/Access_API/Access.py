@@ -122,4 +122,4 @@ if __name__ == '__main__':
     uName, passW = login.split(' ')
     g = Github(uName, passW)
     print(getRepoDetails(g))
-    #print(getLangSkills(g))
+    print(getLangSkills(g))

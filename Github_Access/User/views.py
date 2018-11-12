@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
+from django.contrib import messages
 from github import Github
 from .forms import UserForm
+from Access_API.Access import getLangSkills, getRepoDetails
 
 class userView(TemplateView):
     template_name = 'User/userView.html'
@@ -16,7 +18,11 @@ class userView(TemplateView):
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid:
-            print(form.data['usersName'])
-
+            try:
+                g = Github(form.data['userName'], form.data['password'])
+                print(g.get_user().name)
+            except:
+                messages.add_message(request, messages.ERROR, 'Invalid Github details.')
+            
         return render(request, self.template_name)
 
