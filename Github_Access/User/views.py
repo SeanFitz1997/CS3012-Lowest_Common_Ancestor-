@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.contrib import messages
 from github import Github
+import json
 from .forms import UserForm
 from Access_API.Access import getLangSkills, getRepoDetails
 
@@ -20,8 +21,11 @@ class userView(TemplateView):
         if form.is_valid:
             try:
                 g = Github(form.data['userName'], form.data['password'])
+                lang_info = getLangSkills(g) 
+                
                 context = {
-                    'user_login' : g.get_user()
+                    'user_login' : g.get_user(),
+                    'lang_info' : lang_info[0]
                 }
                 return render(request, self.template_name, context)
             except:

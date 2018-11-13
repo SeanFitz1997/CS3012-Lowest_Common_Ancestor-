@@ -10,7 +10,25 @@
         </form>
 
     {% else %}
+        <script>
+            var langs = document.getElementsByClassName('lang');
+            var locs = document.getElementsByClassName('loc');
+            var graph = d3.select('#total_skills');
+            console.log(graph);
+
+        </script>
         <h3><b>Username: </b>{{ user_login.login }}</h3>
         <h3><b>Name: </b>{{ user_login.name }}</h3>
+
+        <table>
+            {% for key, value in lang_info.items %}
+            <tr>
+                <td class="lang">{{ key }}</td>
+                <td class="loc">{{ value }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <svg id="total_skills"></svg>
     {% endif %}
 {% endblock %}
