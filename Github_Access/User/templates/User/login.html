@@ -1,0 +1,10 @@
+{% extends "User/header.html" %}
+{% block content %}
+    <p>[TODO add details & instructions]</p>
+    <form method="post">
+        <legend>Log In!</legend>
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}
