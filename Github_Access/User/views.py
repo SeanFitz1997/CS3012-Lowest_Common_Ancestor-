@@ -25,8 +25,7 @@ class userView(TemplateView):
                 #lang_info = getLangSkills(g) 
                 
                 context = {
-                    'user_login' : g.get_user(),
-                    'lang_info' : getLangSkills(g)
+                    'user_login' : g.get_user()
                 }
                 return render(request, self.userViewTemplate, context)
             except:

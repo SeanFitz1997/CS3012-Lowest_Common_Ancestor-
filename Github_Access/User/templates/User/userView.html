@@ -1,19 +1,28 @@
-{% extends "User/header.html" %}
+{% extends 'User/header.html' %}
 {% block content %}
 <h3><b>Username: </b>{{ user_login.login }}</h3>
 <h3><b>Name: </b>{{ user_login.name }}</h3>
 
+<!-- Data from API (This is hidden) -->
 <table id='user_total_info'>
     {% for key, value in lang_info.items %}
     <tr>
-        <td class="user_total_lang">{{ key }}</td>
-        <td class="user_total_loc">{{ value }}</td>
+        <td class='user_total_lang'>{{ key }}</td>
+        <td class='user_total_loc'>{{ value }}</td>
     </tr>
     {% endfor %}
 </table>
-<svg id="user_total_graph"></svg>
+
+<!-- User total language chart -->
+<svg id='user_total_graph'></svg>
+
+<hr/>
+
+<!-- Repo breakdown chart -->
+<svg id='test'></svg>
 
 <script>
+/*
     var user_langs = Array.from(document.getElementsByClassName('user_total_lang'))
         .map(x => x.innerHTML)
         .slice(2);
@@ -21,9 +30,10 @@
         .map(x => x.innerHTML)
         .slice(3);
     console.log(user_langs, typeof(user_langs));
-    console.log(user_langs, typeof(user_locs));
-    //var testLabels = ['Test1', 'Test2', 'Test3', 'Test4', 'Test5'];
-    //var testData = [100, 200, 300, 400, 500];
+    console.log(user_locs, typeof(user_locs));
+*/
+    var user_langs = ['Test1', 'Test2', 'Test3', 'Test4', 'Test5'];
+    var user_locs = [100, 200, 300, 400, 500];
 
     //=================================================
     // User total barchart
@@ -37,59 +47,57 @@
     var labelWidth = 100;
     var height = ((barHeight * user_locs.length) + (barBuffer * (user_locs.length - 1)));
     
-    var svg = d3.select("#user_total_graph")
-        .attr("width", labelWidth + chartWidth).attr("height", height);
+    var svg = d3.select('#user_total_graph')
+        .attr('width', labelWidth + chartWidth).attr('height', height);
 
     //Define tooltip
-    var tooltip = d3.select("body")
-        .append("div")
-        .style("position", "absolute")
-        .style("z-index", "10")
-        .style("visibility", "hidden")
+    var tooltip = d3.select('body')
+        .append('div')
+        .style('position', 'absolute')
+        .style('z-index', '10')
+        .style('visibility', 'hidden')
         .style('background-color' , '#A6ACAF');
 
     // chart background
-    svg.append("rect")
-        .attr("x", labelWidth)
-        .attr("width", labelWidth + chartWidth) 
-        .attr("height", height)
-        .style("fill", "#FFFFFF");
+    svg.append('rect')
+        .attr('x', labelWidth)
+        .attr('width', labelWidth + chartWidth) 
+        .attr('height', height)
+        .style('fill', '#FFFFFF');
         
     // position bars
-    var bar = svg.selectAll("g") 
+    var bar = svg.selectAll('g') 
         .data(user_locs)
         .enter()
-        .append("g")
-        .attr("transform", function(d, i) {
+        .append('g')
+        .attr('transform', function(d, i) {
             return `translate(${0}, ${((i * barHeight) + (barBuffer * i))} )`});
         
     // draw background bars
-    bar.append("rect")
-        .attr("width", chartWidth)
-        .attr("height", barHeight)
+    bar.append('rect')
+        .attr('width', chartWidth)
+        .attr('height', barHeight)
         .attr('x', labelWidth)
         .attr('rx', 5)
         .attr('ry', 5)
         .style('fill', '#F1F1F1');
 
     // draw bars
-    bar.append("rect")
+    bar.append('rect')
         .attr('x', labelWidth)
-        .attr("width", function(d) {
+        .attr('width', function(d) {
             return (d /maxItem) * chartWidth;
         })
-        .attr("height", barHeight)
+        .attr('height', barHeight)
         .attr('rx', 5)
         .attr('ry', 5)
         .style('fill', function(d, i){ return colors[i]})
-        .on("mouseover", function(d){ 
-            tooltip.style("visibility", "visible");
-            tooltip.text(`${d} L.O.C.`);
-            return
-        })
-        .on("mousemove", function(){return tooltip.style("top", 
-            (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
-        .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+        .on('mouseover', function(d){ 
+            tooltip.style('visibility', 'visible');
+            tooltip.text(`${d} L.O.C.`); })
+        .on('mousemove', function(){return tooltip.style('top', 
+            (d3.event.pageY-10)+'px').style('left',(d3.event.pageX+10)+'px');})
+        .on('mouseout', function(){return tooltip.style('visibility', 'hidden');});
 
     // draw labelback grounds
     bar.append('rect')
@@ -101,17 +109,68 @@
         .style('stroke', '#000000');
         
     // draw labels
-    bar.append("text")
-        .attr("x", labelWidth / 3.5)
-        .attr("y", barHeight / 2)
-        .attr("dy", ".35em")
-        .attr("font-family", "arial")
-        .attr("font-size", "15px")
+    bar.append('text')
+        .attr('x', labelWidth / 3.5)
+        .attr('y', barHeight / 2)
+        .attr('dy', '.35em')
+        .attr('font-family', 'arial')
+        .attr('font-size', '15px')
         .text(function(_, i) { return user_langs[i]; });
 
     //=================================================
     // Repo pie charts
     //=================================================
+    drawRepoPieChart('test', user_langs, user_locs);
 
+    function drawRepoPieChart(name, label, data){
+        var width = 400, height = 400, radius = Math.min(width, height) / 2;
+
+        var tooltip = d3.select('body')
+            .append('div')
+            .style('position', 'absolute')
+            .style('z-index', '10')
+            .style('visibility', 'hidden')
+            .style('background-color' , '#A6ACAF');
+
+        var arc = d3.arc()
+            .outerRadius(radius)
+            .innerRadius(0);
+
+        var labelArc = d3.arc()
+            .outerRadius(radius * 0.8)
+            .innerRadius(radius * 0.8);
+
+        var pie = d3.pie()
+            .sort(null)
+            .value(function(d) { return d; });
+
+        var svg = d3.select(`#${name}`)
+            .attr('width', width)
+            .attr('height', height)
+            .append('g')
+            .attr('transform', `translate(${width/2}, ${height/2})`);
+
+        var g = svg.selectAll('.arc')
+            .data(pie(data))
+            .enter()
+            .append('g')
+            .attr('class', 'arc');
+
+        g.append('path')
+            .attr('d', arc)
+            .style('fill', function(_,i) { return colors[i]; })
+            .on('mouseover', function(_,i){ 
+                tooltip.style('visibility', 'visible');
+                tooltip.text(`${data[i]} L.O.C.`);})
+            .on('mousemove', function(){return tooltip.style('top', 
+                (d3.event.pageY-10)+'px').style('left',(d3.event.pageX+10)+'px');})
+            .on('mouseout', function(){return tooltip.style('visibility', 'hidden');});
+
+        g.append('text')
+            .attr('transform', function(d) { return `translate(${labelArc.centroid(d)})`; })
+            .attr('dy', '.35em')
+            .text(function(_,i) { return label[i]; });
+
+    }
 </script>
 {% endblock %}
