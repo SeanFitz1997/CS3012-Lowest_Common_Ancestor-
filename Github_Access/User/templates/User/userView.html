@@ -1,25 +1,118 @@
 {% extends 'User/header.html' %}
 {% block content %}
-<h3><b>Username: </b>{{ user_login.login }}</h3>
-<h3><b>Name: </b>{{ user_login.name }}</h3>
+<div class='container'>
+    <!-- User Bio -->
+    <div class='profile card m-5'>
+        <div class='profile-body'>
+            <div class='profile-bio'>
+                <div class='row'>
+                    <div class='col-md-5 text-center'>
+                        <img class='img-thumbnail md-margin-bottom-10' src='{{user_login.avatar_url}}' alt='profile pic'>
+                    </div>
+                    <div class='col-md-7'>
+                        <h2>{{ user_login.name }}</h2>
+                        <span><strong>Username:</strong> {{ user_login.login }}</span>
+                        <span><strong>Location:</strong> {{ user_login.location }}</span>
+                        <hr>
+                        <p><strong>Bio:</strong></p>
+                        <p>{{ user_login.bio }}</p>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </div> 
 
-<!-- Data from API (This is hidden) -->
-<table id='user_total_info'>
-    {% for key, value in lang_info.items %}
-    <tr>
-        <td class='user_total_lang'>{{ key }}</td>
-        <td class='user_total_loc'>{{ value }}</td>
-    </tr>
-    {% endfor %}
-</table>
+    <div id='languageTotals' class='card m-5'>
+        <div class='card-header'>
+            <h3>Language Skill Chart</h3>
+        </div>
+        <canvas id='total-lang-chart'></canvas>
+        <div class='card-body'>
+            <p class='card-text'>Some example text.</p>
+        </div>
+    </div>
 
-<!-- User total language chart -->
-<svg id='user_total_graph'></svg>
+    <div id='repoBreakdowns' class='card'>
+        <div class='row'>
+            <div id='test1-breakdown' class='card m-1'>
+                <div class='card-header'>
+                    <h3>Test repo 1</h3>
+                </div>
+                <canvas id='total-lang-chart'></canvas>
+            </div>
+            <div id='test2-breakdown' class='card m-1'>
+                <div class='card-header'>
+                    <h3>Test repo 2</h3>
+                </div>
+                <canvas id='total-lang-chart'></canvas>
+            </div>
+        </div>
+    </div>
 
-<hr/>
+    
+    <script>
+        //=================================================
+        // User total barchart
+        //=================================================
+        var ctx = document.getElementById('total-lang-chart').getContext('2d');
+        const backgroundColors = ['rgba(255, 99, 132, 0.2)','rgba(54, 162, 235, 0.2)','rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)','rgba(153, 102, 255, 0.2)','rgba(255, 159, 64, 0.2)',
+                        'rgba(241, 148, 138, 0.2)', 'rgba(46, 64, 83, 0.2)', 'rgba(179, 182, 183, 0.2)'];
+        const boarderColors = ['rgba(255,99,132,1)','rgba(54, 162, 235, 1)','rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)','rgba(153, 102, 255, 1)','rgba(255, 159, 64, 1)',
+                        'rgba(241, 148, 138, 1)', 'rgba(46, 64, 83, 1)', 'rgba(179, 182, 183, 1)'];    
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Test1', 'Test2', 'Test3', 'Test4', 'Test5', 'Test6', 'Test7', 'Test8', 'Test9'],
+                datasets: [{
+                    data: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+                    backgroundColor: backgroundColors,
+                    borderColor: boarderColors,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                legend: { display: false },
+                scales: { yAxes: [{ ticks: { beginAtZero: true } }] }
+            }
+        });
+</script>
 
-<!-- Repo breakdown chart -->
-<svg id='test'></svg>
+    <!-- Data from API (* Removed once extracted *) -->
+    <table id='user_total_info'>
+        {% for key, value in lang_info.items %}
+        <tr>
+            <td class='user_total_lang'>{{ key }}</td>
+            <td class='user_total_loc'>{{ value }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+    <!-- User total language chart -->
+    <svg id='user_total_graph'></svg>
+
+    <!-- Repo breakdown chart -->
+    <div class='row'>
+        <div class='col-sm-6'>
+            <h4>Repo 1</h4>
+            <svg id='test1'></svg>
+        </div>
+        <div class='col-sm-6'>
+            <h4>Repo 2</h4>
+            <svg id='test2'></svg>
+        </div>
+        <div class='col-sm-6'>
+            <h4>Repo 3</h4>
+            <svg id='test3'></svg>
+        </div>
+        <div class='col-sm-6'>
+            <h4>Repo 4</h4>
+            <svg id='test4'></svg>
+        </div>
+    </div>
+</div>
 
 <script>
 /*
@@ -120,10 +213,14 @@
     //=================================================
     // Repo pie charts
     //=================================================
-    drawRepoPieChart('test', user_langs, user_locs);
+    const testRepos = ['test1', 'test2', 'test3', 'test4'];
+    testRepos.forEach(function(item){
+        drawRepoPieChart(item, user_langs, user_locs)
+    });
 
     function drawRepoPieChart(name, label, data){
         var width = 400, height = 400, radius = Math.min(width, height) / 2;
+        var dataTotal = data.reduce((a, b) => a + b, 0);
 
         var tooltip = d3.select('body')
             .append('div')
@@ -161,7 +258,7 @@
             .style('fill', function(_,i) { return colors[i]; })
             .on('mouseover', function(_,i){ 
                 tooltip.style('visibility', 'visible');
-                tooltip.text(`${data[i]} L.O.C.`);})
+                tooltip.text(`${((data[i]/dataTotal)*100).toFixed(2)}%`);})
             .on('mousemove', function(){return tooltip.style('top', 
                 (d3.event.pageY-10)+'px').style('left',(d3.event.pageX+10)+'px');})
             .on('mouseout', function(){return tooltip.style('visibility', 'hidden');});
@@ -170,7 +267,6 @@
             .attr('transform', function(d) { return `translate(${labelArc.centroid(d)})`; })
             .attr('dy', '.35em')
             .text(function(_,i) { return label[i]; });
-
     }
 </script>
 {% endblock %}
