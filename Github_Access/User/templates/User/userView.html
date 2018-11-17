@@ -32,28 +32,79 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-                <h3 class="card-header">Test Repo 1</h3>
-                <canvas id='test-graph'></canvas>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card">
-                    <h3 class="card-header">Test Repo 2</h3>
-                    <p>[Graph Here]</p>
+    <div>
+        {% for i in range %}
+            <div class='card m-3' style='float: left; width: 30rem; margin-left: auto; margin-right: auto;'>
+                <div class='card-header'>
+                    <h3>RepoName</h3>
+                </div>
+                <div class='card-body'>
+                    <canvas id='repo-{{i}}'></canvas>
                 </div>
             </div>
-        </div>
+        {% endfor %}
     </div>
-    
+    <!--
+                <div class="col-md-6">
+                    <div class="card">
+                            <h3 class="card-header">Test Repo 2</h3>
+                            <canvas id='repo-{{i}}'></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                            <h3 class="card-header">Test Repo 2</h3>
+                            <canvas id='repo-{{i}}'></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                            <h3 class="card-header">Test Repo 2</h3>
+                            <canvas id='repo-{{i}}'></canvas>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        -->
+
+
+    <!-- User details (* Removed after extracted by js *) -->
+    <table id='user_lang_info'>
+        {% for key, value in user_lang_info.items %}
+        <tr>
+            <td class='user_lang_labels'>{{ key }}</td>
+            <td class='user_lang_locs'>{{ value }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <!-- Repo details (* Removed after extracted by js *) -->
+    {% for repo in user_repo_info %}
+        <table class='repo_details'>
+            {% for key, value in repo.items%}
+                <tr>
+                    <td class='repo_lang'>{{key}}</td>
+                    <td class='repo_loc'>{{value}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
+         
     <script>
         //=================================================
         // User total barchart
         //=================================================
-        var testlabels = ['Test1', 'Test2', 'Test3', 'Test4', 'Test5', 'Test6', 'Test7', 'Test8', 'Test9'];
-        var testData = [100, 200, 300, 400, 500, 600, 700, 800, 900];
+        // Extracting user total info
+        var user_lang_labels = Array.from(document.getElementsByClassName('user_lang_labels'))
+            .map(x => x.innerHTML)
+            .slice(2);
+        var user_lang_locs = Array.from(document.getElementsByClassName('user_lang_locs'))
+            .map(x => x.innerHTML)
+            .slice(2);
+        //Remove from dom
+        document.getElementById('user_lang_info').remove();
+        
         var ctx = document.getElementById('total-lang-chart').getContext('2d');
         const backgroundColors = ['rgba(255, 99, 132, 0.2)','rgba(54, 162, 235, 0.2)','rgba(255, 206, 86, 0.2)',
                         'rgba(75, 192, 192, 0.2)','rgba(153, 102, 255, 0.2)','rgba(255, 159, 64, 0.2)',
@@ -64,9 +115,9 @@
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: testlabels,
+                labels: user_lang_labels,
                 datasets: [{
-                    data: testData,
+                    data: user_lang_locs,
                     backgroundColor: backgroundColors,
                     borderColor: boarderColors,
                     borderWidth: 1
@@ -81,11 +132,29 @@
         //=================================================
         // Repo pie charts
         //=================================================
+
+        var repo_details = document.getElementsByClassName('repo_details');
+        Array.from(repo_details).forEach(function(repo, i){
+            //extract details from each repo
+            var repo_labels = Array.from(repo.getElementsByClassName('repo_lang'))
+                .map(x => x.innerHTML)
+                .slice(2);
+            var repo_loc = Array.from(repo.getElementsByClassName('repo_loc'))
+                .map(x => x.innerHTML);
+            var reop_name = repo_loc[0];
+            repo_loc = repo_loc.slice(2);
+
+            //draw its pie chart
+            drawRepoPieChart(`repo-${i}`, repo_labels, repo_loc);
+            
+            //remove data from dom
+            repo.remove();
+        });
         
-        drawRepoPieChart('test-graph', testlabels, testData);
+        drawRepoPieChart('test-graph', user_lang_labels, user_lang_locs);
 
         function drawRepoPieChart(id, labels, data){
-            var dataTotal = data.reduce((a, b) => a + b, 0);
+            var dataTotal = user_lang_locs.reduce((a, b) => a + b, 0);
             var ctx = document.getElementById(id).getContext('2d');
             var myChart = new Chart(ctx, {
             type: 'pie',
