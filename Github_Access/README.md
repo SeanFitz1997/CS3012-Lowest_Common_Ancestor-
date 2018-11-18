@@ -26,7 +26,7 @@ pip install pip install django-crispy-forms
 
 ## Run server
 Run website on local machine.
-Navagate into the Github_Access directory and run manage.py with the runserver option.
+Navagate into the Github_Access directory and run manage.py with the runserver option. This website can then be accessed on http://127.0.0.1:8000.
 ```
 $ python manage.py runserver
 ```
