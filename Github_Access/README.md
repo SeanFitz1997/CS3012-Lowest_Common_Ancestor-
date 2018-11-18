@@ -12,7 +12,7 @@ Check python version:
 ```
 $ python --version
 ```
-##  You must have Django installed to run the development server along with the following libraries
+###  You must have Django installed to run the development server along with the following libraries
 Install Django
 ```
 pip install django
