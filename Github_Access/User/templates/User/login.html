@@ -1,8 +1,17 @@
 {% extends "User/header.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-        <p>[TODO add details & instructions]</p>
     <div class ="container" style="padding-right:20px; padding-bottom:60px">
+        <div class="card m-3">
+            <div class="card-header">
+                <h3>About</h3>
+            </div>
+            <div class='card-body'>
+                <p class='card-text'>This application will give you information on you skill level in various programming languages as well as a breakdown of the languages used in your repos.</p>
+                <p class='card-text'>Please enter your Github login details. It will take a while for the results to render <b>(~ 1 min)</b>.</p>
+            </div>
+        </div>
+
         <form method="post">
             <fieldset>
                 <legend>Log In!</legend>
