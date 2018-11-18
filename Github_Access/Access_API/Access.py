@@ -57,10 +57,10 @@ def getLangSkills(user):
         '.FSX' : 'F#',
         '.SH' : 'Shell',
         '.C' : 'C',
-        'PL' : 'Perl',
+        '.PL' : 'Perl',
         '.FS' : 'F#',
         '.INO' : 'Arduino',
-        'RPY' : 'Python',
+        '.RPY' : 'Python',
         '.VCPROJ' : 'C++',
         '.HH' :	'C++',
         '.CC' : 'C++',
@@ -87,6 +87,11 @@ def getLangSkills(user):
         contents = repo.get_contents('')
         while len(contents) > 1:
             file_content = contents.pop(0)
+
+            #* Special case to not include bootstrap or jquery lib *
+            if re.search(r'bootstrap|jquery|cryptonate', file_content.path, re.IGNORECASE):
+                continue
+
             if file_content.type == 'dir':
                 contents.extend(repo.get_contents(file_content.path))
             else:
@@ -94,6 +99,7 @@ def getLangSkills(user):
                 extention = re.search(r'.+(\..+)$', file_content.name, re.IGNORECASE)
                 #If proramming file
                 if extention and extention.group(1).upper() in proLang:
+
                     lang = proLang[extention.group(1).upper()]
                     #Add to user totals
                     userDetails['Total'] += file_content.size

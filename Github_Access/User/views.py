@@ -22,8 +22,9 @@ class userView(TemplateView):
         if form.is_valid:
             try:
                 g = Github(form.data['userName'], form.data['password'])
-                #lang_info = getLangSkills(g) 
-                response = [{'Name': 'User', 'Total': 7056362, 'JavaScript': 4959458, 'HTML': 243166, 'CSS': 1733424, 'PHP': 2436, 'Python': 79858, 'C': 7626, 'Java': 25736, 'C++': 4658}, {'Name': 'CryptoDonator', 'Total': 2608215, 'JavaScript': 2021614, 'HTML': 108772, 'CSS': 476611, 'PHP': 1218}, {'Name': 'SoftwareEngineeringProject', 'Total': 2608215, 'JavaScript': 2021614, 'HTML': 108772, 'CSS': 476611, 'PHP': 1218}, {'Name': 'CS3012_SoftwareEngineering', 'Total': 867977, 'Python': 18336, 'CSS': 390069, 'JavaScript': 458115, 'HTML': 1457}, {'Name': 'DNS_Validator_API', 'Total': 7626, 'C': 7626}, {'Name': 'EBII1819--Trinity_Module_Review', 'Total': 896728, 'Python': 25270, 'HTML': 23210, 'CSS': 390133, 'JavaScript': 458115}, {'Name': 'ItunesPlaylist_Parser', 'Total': 4275, 'Python': 4275}, {'Name': 'python_machine_learning', 'Total': 31977, 'Python': 31977}, {'Name': 'Snake', 'Total': 26691, 'Java': 25736, 'HTML': 955}, {'Name': 'Socket-GET-request', 'Total': 4658, 'C++': 4658}]
+                #lang_info = getLangSkills(g)
+                #print(lang_info) 
+                response = [{'Name': 'User', 'Total': 158870, 'JavaScript': 13702, 'Python': 81462, 'HTML': 25622, 'C': 7626, 'CSS': 64, 'Java': 25736, 'C++': 4658}, {'Name': 'CryptoDonator', 'Total': 6851, 'JavaScript': 6851}, {'Name': 'SoftwareEngineeringProject', 'Total': 6851, 'JavaScript': 6851}, {'Name': 'CS3012_SoftwareEngineering', 'Total': 21069, 'Python': 19612, 'HTML': 1457}, {'Name': 'DNS_Validator_API', 'Total': 7626, 'C': 7626}, {'Name': 'EBII1819--Trinity_Module_Review', 'Total': 48872, 'Python': 25598, 'HTML': 23210, 'CSS': 64}, {'Name': 'ItunesPlaylist_Parser', 'Total': 4275, 'Python': 4275}, {'Name': 'python_machine_learning', 'Total': 31977, 'Python': 31977}, {'Name': 'Snake', 'Total': 26691, 'Java': 25736, 'HTML': 955}, {'Name': 'Socket-GET-request', 'Total': 4658, 'C++': 4658}]
                 user_lang_info = response[0]
                 user_repo_info = response[1:]
                 repo_len = len(user_repo_info)
