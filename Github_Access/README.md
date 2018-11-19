@@ -14,7 +14,7 @@ Check python version:
 ```
 $ python --version
 ```
-###  You must have Django installed to run the development server along with the following libraries (django-crispy-forms, PyGithub)
+###  You must have Django installed to run the development server along with the following libraries (django-crispy-forms, PyGithub, regex)
 Install Requirements
 ```
 pip install -r requirements.txt
