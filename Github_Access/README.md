@@ -28,7 +28,7 @@ $ python manage.py runserver
 ```
 
 ## Demo
-Here an example using my Github acount.
+Heres an example using my Github account.
 
 ### Login page
 ![Login page](./screenshots/login_screenshot.PNG)
