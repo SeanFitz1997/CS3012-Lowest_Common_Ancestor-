@@ -31,7 +31,7 @@ $ python manage.py runserver
 Here an example using my Github acount.
 
 ### Login page
-![Login page](.screenshots/login_screenshot.PNG)
+![Login page](./screenshots/login_screenshot.PNG)
 
 ### Visualisation
 ![Demo Visualisation](./screenshots/demo_visualisation.gif)
