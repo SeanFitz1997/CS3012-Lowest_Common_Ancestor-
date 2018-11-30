@@ -26,3 +26,12 @@ Navigate into the Github_Access directory and run manage.py with the runserver o
 ```
 $ python manage.py runserver
 ```
+
+## Demo
+Here an example using my Github acount.
+
+### Login page
+![Login page](.screenshots/login_screenshot.PNG)
+
+### Visualisation
+![Demo Visualisation](./screenshots/demo_visualisation.gif)
