@@ -11,7 +11,7 @@ A written report on a Biography of an influential software engineer. My chosen s
 
 ## Measuring_Software_Engineering_Report 
 ### (Assignment 4)
-A wriiten report on the ways in which the software engineering process can be measured and assesed. In particular I descuss the **Metrics** used, **Computationial platforms** available to preform this analysis, the **algorithmic approachs** available, and the **ethical concerns** involed with this analysis.
+A written report on the ways in which the software engineering process can be measured and assesed. In particular I descuss the **Metrics** used, **Computationial platforms** available to preform this analysis, the **algorithmic approachs** available, and the **ethical concerns** involed with this analysis.
 
 ## Github_Access 
 ### (Assignment 5)
